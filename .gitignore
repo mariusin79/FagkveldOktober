@@ -1,0 +1,7 @@
+# Ignore all of the following directories
+bin
+obj
+*.suo
+_Resharper*
+*.DotSettings.user
+deploy.ps1

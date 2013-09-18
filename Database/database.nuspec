@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <version>1.0.0</version>
+    <authors>Norsk Rikstoto</authors>
+    <owners>Norsk Rikstoto</owners>
+    <projectUrl>http://www.rikstoto.no/</projectUrl>
+    <id>Rikstoto.Service.Expert.Database</id>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Expert service database</description>
+  </metadata>
+    <files>      	  
+	  <file src="**" target="scripts" />      
+      <file src="..\deploy\database\*" target="." />	  
+  </files>
+</package>
