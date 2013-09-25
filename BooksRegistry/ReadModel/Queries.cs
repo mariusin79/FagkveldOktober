@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using BooksRegistry.Contracts;
 using Raven.Client;
+using Raven.Client.Linq;
 using SharedContracts;
 
 namespace BooksRegistry.ReadModel
@@ -17,10 +18,10 @@ namespace BooksRegistry.ReadModel
 
         public IEnumerable<Book> GetDetailsAboutBooks(BookKey[] books)
         {
-            throw new NotImplementedException();
-            //using (var session = _database.OpenSession())
-            //{
-            //}
+            using (var session = _database.OpenSession())
+            {
+                return session.Query<Book>().Where(book => book.Id.In(books));
+            }
 
         }
     }

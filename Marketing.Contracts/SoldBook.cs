@@ -4,6 +4,6 @@ namespace Marketing.Contracts
 {
     public class SoldBook
     {
-        BookKey Id { get; set; } 
+        public BookKey Id { get; set; } 
     }
 }

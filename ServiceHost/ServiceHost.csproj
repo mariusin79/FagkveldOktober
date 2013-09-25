@@ -76,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EndpointConfig.cs" />
+    <Compile Include="MarketingServiceStarter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SalesServiceStarter.cs" />
   </ItemGroup>
@@ -86,6 +87,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Marketing.Contracts\Marketing.Contracts.csproj">
+      <Project>{cb503ed6-795d-45e3-8ca1-f6ecd8e42659}</Project>
+      <Name>Marketing.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Marketing\Marketing.csproj">
+      <Project>{bdcb27fc-66a0-4a13-a618-0654f34b8eb9}</Project>
+      <Name>Marketing</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sales.Contracts\Sales.Contracts.csproj">
       <Project>{FEBE7F50-B0B3-44DB-9021-8F6BC3B4EF98}</Project>
       <Name>Sales.Contracts</Name>

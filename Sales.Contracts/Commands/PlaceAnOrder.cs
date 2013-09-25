@@ -2,9 +2,9 @@
 
 namespace Sales.Contracts.Commands
 {
-    public class BuyBook
+    public class PlaceAnOrder
     {
-        public BookKey BookIAmBuying { get; set; }
+        public BookKey[] BooksIAmBuying { get; set; }
 
         public CustomerKey Buyer { get; set; } 
     }

@@ -19,7 +19,7 @@ namespace Sales.Hosting
                              new DictionaryAdapterFactory().GetAdapter<IConnectionStrings>(new ConnectionStringsWrapper(ConfigurationManager.ConnectionStrings))));
 
             container.Register(
-                AllTypes.FromThisAssembly().Where(type => type.GetInterfaces().Length > 0).WithService.AllInterfaces());
+                Classes.FromThisAssembly().Where(type => type.GetInterfaces().Length > 0).WithService.AllInterfaces());
         }
     }
 }
