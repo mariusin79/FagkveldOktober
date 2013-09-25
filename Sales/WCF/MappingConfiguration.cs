@@ -3,7 +3,7 @@ using Sales.Automapping;
 using Sales.Contracts;
 using SharedContracts;
 
-namespace Sales
+namespace Sales.WCF
 {
     public class MappingConfiguration : IMappingConfiguration
     {

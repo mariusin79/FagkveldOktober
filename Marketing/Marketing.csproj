@@ -69,9 +69,15 @@
     <Compile Include="BooksWereSold\Book.cs" />
     <Compile Include="BooksWereSold\HandleEvent.cs" />
     <Compile Include="Hosting\Neo4j.cs" />
+    <Compile Include="Hosting\Wcf.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WCF\MarketingService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Marketing.Contracts\Marketing.Contracts.csproj">
+      <Project>{CB503ED6-795D-45E3-8CA1-F6ECD8E42659}</Project>
+      <Name>Marketing.Contracts</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sales.Contracts\Sales.Contracts.csproj">
       <Project>{FEBE7F50-B0B3-44DB-9021-8F6BC3B4EF98}</Project>
       <Name>Sales.Contracts</Name>

@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
-using AutoMapper;
 using Sales.Automapping;
 using Sales.Contracts;
 using Sales.ReadModel;
 
-namespace Sales
+namespace Sales.WCF
 {
     public class SalesService : ISalesService
     {
