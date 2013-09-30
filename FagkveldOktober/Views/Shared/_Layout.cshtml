@@ -4,13 +4,28 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-    @Styles.Render("~/Content/css")
+
+    @Styles.Render("~/Content/bootstrap/bootstrap.css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/Scripts/knockout-2.3.0.js")
+    @Scripts.Render("~/Scripts/knockout.mapping-latest.js")
 </head>
 <body>
-    @RenderBody()
+    <div class="container">
+        <div style="float: left; vertical-align: top">
+            <h3 class="text-muted">Book store</h3>
+        </div>
+        <div style="float: right">
+            @{
+                Html.RenderAction("Widget", "Cart");
+            }
+        </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @RenderSection("scripts", required: false)
+        <div style="clear: both">
+            @RenderBody()
+        </div>
+    </div>
+
+    @RenderSection("AdditionalScripts", false)
 </body>
 </html>

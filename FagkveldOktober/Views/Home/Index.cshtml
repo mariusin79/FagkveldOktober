@@ -1,2 +1,27 @@
-﻿
-<h1>Book store</h1>
+﻿@model FagkveldOktober.Models.HomeIndexViewModel
+
+<h2>Available for sale</h2>
+
+<ul data-bind="foreach: BooksAvailableForSale">
+    <div>
+        <span data-bind="text: Title, click: $parent.viewBook"></span>
+        <span data-bind="text: PriceInOere"></span>
+        <span data-bind="text: Author"></span>
+    </div>
+</ul>
+
+@section AdditionalScripts
+{
+    <script type="text/javascript">
+        var data = @Html.Raw(new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(Model));
+        
+        var viewModel = ko.mapping.fromJS(data);
+        viewModel.viewBookUrl = '@Url.Action("View", "Purchase")'
+
+        viewModel.viewBook = function(currentBook) {
+            window.location.href = viewModel.viewBookUrl + '?bookId=' + currentBook.Id.Value();
+        };
+
+        ko.applyBindings(viewModel);
+    </script>
+}

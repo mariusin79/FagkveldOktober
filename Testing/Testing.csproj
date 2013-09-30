@@ -59,7 +59,14 @@
     <Reference Include="NServiceStub.NServiceBus">
       <HintPath>..\packages\ServiceStub\NServiceStub.NServiceBus.dll</HintPath>
     </Reference>
+    <Reference Include="Raven.Abstractions">
+      <HintPath>..\packages\RavenDB.Client.2.5.2700\lib\net45\Raven.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Client.Lightweight">
+      <HintPath>..\packages\RavenDB.Client.2.5.2700\lib\net45\Raven.Client.Lightweight.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
@@ -73,6 +80,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BooksRegistry.Contracts\BooksRegistry.Contracts.csproj">
+      <Project>{63969CA6-D2A8-4806-A067-26C6A92FC57C}</Project>
+      <Name>BooksRegistry.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BooksRegistry\BooksRegistry.csproj">
+      <Project>{35CD30CB-2181-4F14-964A-09A9227180EA}</Project>
+      <Name>BooksRegistry</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sales.Contracts\Sales.Contracts.csproj">
       <Project>{FEBE7F50-B0B3-44DB-9021-8F6BC3B4EF98}</Project>
       <Name>Sales.Contracts</Name>

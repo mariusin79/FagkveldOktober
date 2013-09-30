@@ -13,13 +13,11 @@ namespace ServiceHost
 {
     public class MarketingServiceStarter : IWantToRunWhenBusStartsAndStops
     {
-        private readonly IWindsorContainer _container;
         private ServiceHostBase _wcfEndPoint;
 
         public MarketingServiceStarter(IWindsorContainer container)
         {
-            _container = container;
-            _container.Install(FromAssembly.Containing<Neo4j>());
+            container.Install(FromAssembly.Containing<Neo4j>());
         }
 
         public void Start()

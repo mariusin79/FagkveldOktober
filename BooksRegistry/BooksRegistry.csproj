@@ -30,6 +30,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.3.0.0\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4">
+      <HintPath>..\packages\AutoMapper.3.0.0\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
     <Reference Include="Castle.Core">
       <HintPath>..\packages\Castle.Core.3.2.0\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
@@ -52,10 +58,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Automapping\IMappingConfiguration.cs" />
+    <Compile Include="Automapping\IOurMapper.cs" />
+    <Compile Include="Automapping\OurMapper.cs" />
+    <Compile Include="Hosting\Mapping.cs" />
+    <Compile Include="Hosting\Wcf.cs" />
+    <Compile Include="ReadModel\RmBook.cs" />
+    <Compile Include="WCF\BooksRegistryService.cs" />
     <Compile Include="Hosting\RavenDbInstaller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReadModel\IQueries.cs" />
-    <Compile Include="ReadModel\Queries.cs" />
+    <Compile Include="WCF\MappingConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BooksRegistry.Contracts\BooksRegistry.Contracts.csproj">

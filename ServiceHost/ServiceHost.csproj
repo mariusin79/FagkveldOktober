@@ -75,6 +75,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BooksRegistryServiceStarter.cs" />
     <Compile Include="EndpointConfig.cs" />
     <Compile Include="MarketingServiceStarter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -87,6 +88,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BooksRegistry.Contracts\BooksRegistry.Contracts.csproj">
+      <Project>{63969CA6-D2A8-4806-A067-26C6A92FC57C}</Project>
+      <Name>BooksRegistry.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BooksRegistry\BooksRegistry.csproj">
+      <Project>{35cd30cb-2181-4f14-964a-09a9227180ea}</Project>
+      <Name>BooksRegistry</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Marketing.Contracts\Marketing.Contracts.csproj">
       <Project>{cb503ed6-795d-45e3-8ca1-f6ecd8e42659}</Project>
       <Name>Marketing.Contracts</Name>

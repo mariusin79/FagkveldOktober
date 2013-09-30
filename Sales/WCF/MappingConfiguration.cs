@@ -12,7 +12,7 @@ namespace Sales.WCF
             Mapper.CreateMap<int, BookKey>().ConstructUsing(src => new BookKey {Value = src});
             Mapper.CreateMap<long, Money>().ConstructUsing(src => new Money {PriceInOere = src});
 
-            Mapper.CreateMap<ReadModel.RmAvailableBook, AvailableBook>().ForMember(dst => dst.Book, opt => opt.ResolveUsing(src => src.BookKey));
+            Mapper.CreateMap<ReadModel.RmAvailableBook, AvailableBook>().ForMember(dst => dst.Id, opt => opt.ResolveUsing(src => src.BookKey));
         }
     }
 }
