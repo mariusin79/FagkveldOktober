@@ -23,7 +23,7 @@ namespace Marketing.WCF
 
             var books = ((IRawGraphClient) _client).ExecuteGetCypherResults<Node<Book>>(query).ToList();
 
-            IEnumerable<Node<Book>> soldBooks = _client.Cypher.Start(new {n = books}).Match("(n)--(x)").Return<Node<Book>>("n").Results;
+            IEnumerable<Node<Book>> soldBooks = _client.Cypher.Start(new {n = books}).Match("(n)--(x)").Return<Node<Book>>("x").Results;
 
             return soldBooks.Select(bookReference => new SoldBook{ Id = new BookKey{ Value = bookReference.Data.Id }}).ToList();
         }

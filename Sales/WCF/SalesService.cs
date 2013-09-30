@@ -2,6 +2,7 @@
 using Sales.Automapping;
 using Sales.Contracts;
 using Sales.ReadModel;
+using SharedContracts;
 
 namespace Sales.WCF
 {
@@ -21,6 +22,13 @@ namespace Sales.WCF
             var books = _queries.FindBooksAvailableForSale();
 
             return _mapper.Map<List<AvailableBook>>(books);
+        }
+
+        public List<AvailableBook> GetBooksAvailableForSale(BookKey[] books)
+        {
+            var result = _queries.GetBooksAvailableForSale(books);
+
+            return _mapper.Map<List<AvailableBook>>(result);
         }
     }
 }

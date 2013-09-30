@@ -28,7 +28,6 @@ namespace FagkveldOktober.Controllers
                 {
                     Id = book.Id,
                     PriceInOere = book.Price.PriceInOere
-
                 }).ToList();
 
             foreach (var detail in details)

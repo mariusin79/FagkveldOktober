@@ -140,6 +140,7 @@
     <Compile Include="IoC\WindsorControllerFactory .cs" />
     <Compile Include="Models\BookViewModel.cs" />
     <Compile Include="Models\HomeIndexViewModel.cs" />
+    <Compile Include="Models\PurchaseViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceGateways\IServiceGateway.cs" />
     <Compile Include="ServiceGateways\ServiceGateway.cs" />
@@ -257,6 +258,10 @@
     <ProjectReference Include="..\BooksRegistry.Contracts\BooksRegistry.Contracts.csproj">
       <Project>{63969CA6-D2A8-4806-A067-26C6A92FC57C}</Project>
       <Name>BooksRegistry.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Marketing.Contracts\Marketing.Contracts.csproj">
+      <Project>{CB503ED6-795D-45E3-8CA1-F6ECD8E42659}</Project>
+      <Name>Marketing.Contracts</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sales.Contracts\Sales.Contracts.csproj">
       <Project>{FEBE7F50-B0B3-44DB-9021-8F6BC3B4EF98}</Project>

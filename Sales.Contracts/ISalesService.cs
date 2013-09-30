@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ServiceModel;
+using SharedContracts;
 
 namespace Sales.Contracts
 {
@@ -8,5 +9,8 @@ namespace Sales.Contracts
     {
         [OperationContract]
         List<AvailableBook> FindBooksAvailableForSale();
+
+        [OperationContract]
+        List<AvailableBook> GetBooksAvailableForSale(BookKey[] books);
     }
 }
