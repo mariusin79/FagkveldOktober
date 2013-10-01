@@ -1,6 +1,7 @@
 ﻿@model FagkveldOktober.Models.PurchaseViewModel
 
-<h2 data-bind="text: SelectedBook.Title">Zee book</h2>
+<h3 data-bind="text: SelectedBook.Title"></h3>
+<input type="button" value="Add To Cart" data-bind="click: addToCart" />
 
 <h2>Customers Who Bought This Book Also Bought</h2>
 
@@ -12,8 +13,12 @@
 {
     <script type="text/javascript">
         var data = @Html.Raw(new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(Model));
-        
+
         var viewModel = ko.mapping.fromJS(data);
+
+        viewModel.addToCart = function() {
+            $.post('@Url.Action("AddToCart", "Purchase")', { bookId: viewModel.SelectedBook.Id.Value() });
+        };
 
         ko.applyBindings(viewModel);
     </script>

@@ -47,7 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AvailableBook.cs" />
-    <Compile Include="Commands\PlaceAnOrder.cs" />
+    <Compile Include="Commands\IPlaceAnOrder.cs" />
     <Compile Include="IBooksWereSold.cs" />
     <Compile Include="ISalesService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

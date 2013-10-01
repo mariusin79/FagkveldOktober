@@ -5,6 +5,7 @@ using System.Web.Routing;
 using Castle.Windsor;
 using Castle.Windsor.Installer;
 using FagkveldOktober.IoC;
+using NServiceBus;
 
 namespace FagkveldOktober
 {
@@ -25,6 +26,9 @@ namespace FagkveldOktober
             var container = new WindsorContainer();
             container.Install(FromAssembly.This());
             ControllerBuilder.Current.SetControllerFactory(new WindsorControllerFactory(container));
+
+            Configure.Serialization.Xml();
+            Configure.With().CastleWindsorBuilder(container).UseTransport<Msmq>().UnicastBus().SendOnly();
         }
     }
 }

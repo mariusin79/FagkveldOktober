@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using BooksRegistry.Contracts;
+using FagkveldOktober.Cart;
 using FagkveldOktober.Models;
 using FagkveldOktober.ServiceGateways;
 using Marketing.Contracts;
@@ -61,5 +62,15 @@ namespace FagkveldOktober.Controllers
 
             return View(vm);
          }
+
+        public ActionResult AddToCart(int bookId)
+        {
+            var cart = Session.Cart();
+
+            cart.AddToCart(new BookKey {Value = bookId});
+            Session.Cart(cart);
+
+            return Json(new {Status = "done"}, JsonRequestBehavior.AllowGet);
+        }
     }
 }
