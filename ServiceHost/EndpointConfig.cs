@@ -25,6 +25,7 @@ namespace ServiceHost
             Configure.With()
                      .CastleWindsorBuilder(container)
                      .UseTransport<Msmq>()
+                     .RavenSubscriptionStorage()
                      .UnicastBus();
         }
     }

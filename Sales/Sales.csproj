@@ -45,6 +45,15 @@
     <Reference Include="Dapper">
       <HintPath>..\packages\Dapper.1.13\lib\net45\Dapper.dll</HintPath>
     </Reference>
+    <Reference Include="FluentNHibernate">
+      <HintPath>..\packages\FluentNHibernate.1.3.0.733\lib\FluentNHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\packages\NHibernate.3.3.3.4001\lib\Net35\NHibernate.dll</HintPath>
+    </Reference>
     <Reference Include="NServiceBus, Version=4.0.0.0, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NServiceBus.Interfaces.4.0.5\lib\net40\NServiceBus.dll</HintPath>
@@ -63,10 +72,26 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Automapping\IMappingConfiguration.cs" />
-    <Compile Include="Automapping\IOurMapper.cs" />
-    <Compile Include="Automapping\OurMapper.cs" />
-    <Compile Include="Hosting\AVeryBroadConvention.cs" />
+    <Compile Include="Automapping\IMapper.cs" />
+    <Compile Include="Automapping\Mapper.cs" />
+    <Compile Include="NHibernate\CustomForeignKeyConvention.cs" />
+    <Compile Include="NHibernate\HasManyConvention.cs" />
+    <Compile Include="NHibernate\OurComponentDatabaseNamingConvention.cs" />
+    <Compile Include="Hosting\Mapper.cs" />
+    <Compile Include="Hosting\WriteModel.cs" />
+    <Compile Include="Hosting\ReadModel.cs" />
+    <Compile Include="Hosting\Wcf.cs" />
+    <Compile Include="NHibernate\FluentConfigurationBuilder.cs" />
+    <Compile Include="NHibernate\IInternalSessionFactory.cs" />
+    <Compile Include="NHibernate\ISessionManager.cs" />
+    <Compile Include="NHibernate\OurDefaultAutoMappingConfiguration.cs" />
+    <Compile Include="NHibernate\Repositories\CustomerSalesRepository.cs" />
+    <Compile Include="NHibernate\SessionManager.cs" />
+    <Compile Include="NHibernate\SessionUsage.cs" />
+    <Compile Include="PlaceAnOrder\CustomerSales.cs" />
     <Compile Include="PlaceAnOrder\HandleMessage.cs" />
+    <Compile Include="PlaceAnOrder\ICustomerSalesRepository.cs" />
+    <Compile Include="PlaceAnOrder\SoldBook.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReadModel\IQueries.cs" />
     <Compile Include="ReadModel\IConnectionStrings.cs" />

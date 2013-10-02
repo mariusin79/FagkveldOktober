@@ -1,1 +1,0 @@
-c:\tools\roundhouse\rh.exe -c=server=carbon\sqlexpress;database=Sales;Trusted_Connection=true -env=LOCAL /vf=..\FagkveldOktober\bin\FagkveldOktober.dll -t --ct=3600

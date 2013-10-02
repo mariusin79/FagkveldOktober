@@ -1,6 +1,6 @@
 ﻿namespace Sales.Automapping
 {
-    public interface IOurMapper
+    public interface IMapper
     {
         T Map<T>(object src);
     }

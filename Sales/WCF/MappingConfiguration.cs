@@ -2,6 +2,7 @@
 using Sales.Automapping;
 using Sales.Contracts;
 using SharedContracts;
+using Mapper = AutoMapper.Mapper;
 
 namespace Sales.WCF
 {

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.ServiceModel;
+using Castle.Facilities.TypedFactory;
 using Castle.Facilities.WcfIntegration;
 using Castle.Windsor;
 using Castle.Windsor.Installer;
 using NServiceBus;
 using Sales.Contracts;
-using Sales.Hosting;
 
 namespace ServiceHost
 {
@@ -15,7 +15,8 @@ namespace ServiceHost
 
         public SalesServiceStarter(IWindsorContainer container)
         {
-            container.Install(FromAssembly.Containing<AVeryBroadConvention>());
+            container.AddFacility<TypedFactoryFacility>();
+            container.Install(FromAssembly.Containing<Sales.Hosting.WriteModel>());
         }
 
         public void Start()

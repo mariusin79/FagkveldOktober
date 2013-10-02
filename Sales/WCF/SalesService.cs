@@ -9,9 +9,9 @@ namespace Sales.WCF
     public class SalesService : ISalesService
     {
         private readonly IQueries _queries;
-        private readonly IOurMapper _mapper;
+        private readonly IMapper _mapper;
 
-        public SalesService(IQueries queries, IOurMapper mapper)
+        public SalesService(IQueries queries, IMapper mapper)
         {
             _queries = queries;
             _mapper = mapper;

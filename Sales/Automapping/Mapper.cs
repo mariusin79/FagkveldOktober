@@ -3,9 +3,9 @@ using AutoMapper;
 
 namespace Sales.Automapping
 {
-    public class OurMapper : IOurMapper
+    public class Mapper : IMapper
     {
-        public OurMapper(IList<IMappingConfiguration> configurations)
+        public Mapper(IList<IMappingConfiguration> configurations)
         {
             foreach (var mappingConfiguration in configurations)
             {
@@ -15,7 +15,7 @@ namespace Sales.Automapping
 
         public T Map<T>(object src)
         {
-            return Mapper.Map<T>(src);
+            return AutoMapper.Mapper.Map<T>(src);
         } 
     }
 }
