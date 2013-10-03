@@ -1,5 +1,26 @@
-﻿@model FagkveldOktober.Cart.ShoppingCart
+﻿@model FagkveldOktober.Models.CartViewModel
 
-<h1>Cart</h1>
+<h3>Cart</h3>
 
-@Html.ActionLink("Confirm", "Checkout", "Cart")
+<div data-bind="ifnot: Content().length == 0">
+    <div data-bind="foreach: Content">
+        <span data-bind="text: Title"></span>
+        <span data-bind="text: Quantity"></span>
+        <span data-bind="text: SumTotalInOere"></span>
+    </div>
+    <span data-bind="text: SumTotalInOere"></span>
+    @Html.ActionLink("Confirm", "Checkout", "Cart")
+</div>
+<div data-bind="if: Content().length == 0">Your cart is empty</div>
+
+
+@section AdditionalScripts
+{
+    <script type="text/javascript">
+        var data = @Html.Raw(new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(Model));
+
+        var viewModel = ko.mapping.fromJS(data);
+
+        ko.applyBindings(viewModel);
+    </script>
+}

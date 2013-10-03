@@ -153,6 +153,8 @@
     <Compile Include="IoC\ServiceGateways.cs" />
     <Compile Include="IoC\WindsorControllerFactory .cs" />
     <Compile Include="Models\BookViewModel.cs" />
+    <Compile Include="Models\CartItemViewModel.cs" />
+    <Compile Include="Models\CartViewModel.cs" />
     <Compile Include="Models\HomeIndexViewModel.cs" />
     <Compile Include="Models\PurchaseViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

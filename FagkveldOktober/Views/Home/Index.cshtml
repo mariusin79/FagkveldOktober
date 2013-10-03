@@ -4,7 +4,7 @@
 
 <ul data-bind="foreach: BooksAvailableForSale">
     <div>
-        <span data-bind="text: Title, click: $parent.viewBook"></span>
+        <a href="#" data-bind="text: Title, click: $parent.viewBook"></a>
         <span data-bind="text: PriceInOere"></span>
         <span data-bind="text: Author"></span>
     </div>
