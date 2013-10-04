@@ -1,5 +1,6 @@
 ﻿@model FagkveldOktober.Cart.ShoppingCart
+<div class="page-header">
+    <h2>Cart</h2>
+</div>
 
-<h1>Cart</h1>
-
-@Html.ActionLink("Confirm", "Checkout", "Cart")
+@Html.ActionLink("Confirm", "Checkout", "Cart", new {@class="btn btn-default btn-success"})

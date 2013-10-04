@@ -27,7 +27,8 @@ namespace FagkveldOktober.Controllers
             List<BookViewModel> booksAvailableForSale = availableBooks.Select(book => new BookViewModel
                 {
                     Id = book.Id,
-                    PriceInOere = book.Price.PriceInOere
+                    PriceInOere = book.Price.PriceInOere,
+                    Url = Url.Action("View", "Purchase", new {bookId = book.Id.Value})
                 }).ToList();
 
             foreach (var detail in details)
@@ -37,7 +38,7 @@ namespace FagkveldOktober.Controllers
                 bookViewModel.Title = detail.Title;
                 bookViewModel.Author = detail.Author;
                 bookViewModel.Category = detail.Category;
-                bookViewModel.Published = detail.Published;
+                bookViewModel.Published = detail.Published;            
             }
 
             var vm = new HomeIndexViewModel

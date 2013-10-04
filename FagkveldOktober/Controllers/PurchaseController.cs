@@ -56,7 +56,8 @@ namespace FagkveldOktober.Controllers
                                 Id = details.Id, 
                                 PriceInOere = prices.First(price => price.Id == details.Id).Price.PriceInOere, 
                                 Published = details.Published,
-                                Title = details.Title
+                                Title = details.Title,
+                                Url = Url.Action("View", "Purchase", new {bookId= details.Id.Value})
                             }).ToList()
                 };
 
