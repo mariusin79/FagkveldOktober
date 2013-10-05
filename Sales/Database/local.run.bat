@@ -1,1 +1,1 @@
-c:\tools\roundhouse\rh.exe -c=server=carbon\sqlexpress;database=Sales;Trusted_Connection=true -env=LOCAL /vf=..\..\FagkveldOktober\bin\FagkveldOktober.dll --ct=3600
+..\..\packages\roundhouse.0.8.5.0\bin\rh.exe -c=server=carbon\sqlexpress;database=Sales;Trusted_Connection=true -env=LOCAL /vf=..\..\FagkveldOktober\bin\FagkveldOktober.dll --ct=3600

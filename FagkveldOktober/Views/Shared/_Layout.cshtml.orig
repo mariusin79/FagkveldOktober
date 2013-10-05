@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+    @Styles.Render("~/Content/bootstrap/bootstrap.css")
+    @Styles.Render("~/Content/Site.css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/Scripts/knockout-2.3.0.js")
+    @Scripts.Render("~/Scripts/knockout.mapping-latest.js")
+    @Scripts.Render("~/Content/js/formatHelper.js")
+    @Scripts.Render("~/Content/js/knockout-extensions.js")
+    @Scripts.Render("~/Scripts/jquery-1.9.1.js")
+    @Scripts.Render("~/Scripts/bootstrap.js")
+
+</head>
+<<<<<<< HEAD
+<body>
+    <div class="container">
+        <div style="float: left; vertical-align: top">
+            <a href="@Url.Action("Index", "Home")"><h3 class="text-muted">Book store</h3></a>            
+        </div>
+        <div style="float: right">
+            @{
+                Html.RenderAction("Widget", "Cart");
+            }
+=======
+    <body>
+        <div class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/">Book Store</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <div class="navbar-right">
+                        @{ Html.RenderAction("Widget", "Cart"); }
+                    </div>
+                </div>
+            </div>
+>>>>>>> 27aec685ed171d617836995b74c0a659e133b91e
+        </div>
+        <div class="container">
+                @RenderBody()
+        </div>
+
+        @RenderSection("AdditionalScripts", false)
+    </body>
+</html>
