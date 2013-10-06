@@ -16,5 +16,7 @@ namespace BooksRegistry.Contracts
         public DateTime Published { get; set; }
 
         public string Category { get; set; }
+
+        public string CoverFilename { get; set; }
     }
 }

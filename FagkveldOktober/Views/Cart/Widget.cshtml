@@ -1,4 +1,3 @@
 ﻿@model FagkveldOktober.Cart.ShoppingCart
 
-<a href="#" style="vertical-align: bottom"><img width="32" height="32" src="~/Content/images/Shopping.Cart.Icon.png"/></a>
-@Html.ActionLink("Checkout", "Cart", "Cart")
+<a href="@Url.Action("Cart", "Cart")"><span class="glyphicon glyphicon-shopping-cart"></span>Checkout</a>

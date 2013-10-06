@@ -1,32 +1,22 @@
-﻿@model FagkveldOktober.Models.PurchaseViewModel
+﻿@using FagkveldOktober
+@model FagkveldOktober.Models.PurchaseViewModel
 <div class="page-header">
     <h2>Book Info</h2>
 </div>
-<h3 data-bind="text: SelectedBook.Title"></h3>
-<input class="btn btn-default btn-primary" type="button" value="Add To Cart" data-bind="click: addToCart" />
+<h3>{{selectedBook.title}}</h3>
+<input class="btn btn-default btn-primary" type="button" value="Add To Cart" ng-click="purchaseBook(selectedBook.id.value)" />
 
 <h2>Customers Who Bought This Book Also Bought</h2>
-
-<div class="row" data-bind="foreach: AlsoBought">
-    <div class="col-lg-1">
-        <a class="thumbnail" data-bind="text: Title, attr: {href: Url}"></a>
+<div class="row">
+    <div class="col-lg-1" ng-repeat="book in alsoBought">
+        <a class="thumbnail" href="{{book.url}}">{{book.title}}</a>
     </div>
 </div>
 
 @section AdditionalScripts
 {
     <script type="text/javascript">
-        var data = @Html.Raw(new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(Model));
-
-        var viewModel = ko.mapping.fromJS(data);
-
-        viewModel.addToCart = function() {
-            $.post('@Url.Action("AddToCart", "Purchase")', { bookId: viewModel.SelectedBook.Id.Value() }, function () {
-                alert("book added to cart");
-            });
-        };
-
-        ko.applyBindings(viewModel);
+        window.bookStoreData = @Html.Serialize(Model);
     </script>
 }
 

@@ -1,27 +1,36 @@
-﻿@model FagkveldOktober.Models.CartViewModel
+﻿@using FagkveldOktober
+@model FagkveldOktober.Models.CartViewModel
 <div class="page-header">
-<h2>Cart</h2>
+    <h2>Cart</h2>
 </div>
 
-<div data-bind="ifnot: Content().length == 0">
-    <div data-bind="foreach: Content">
-        <span data-bind="text: Title"></span>
-        <span data-bind="text: Quantity"></span>
-        <span data-bind="formatMoney: {oere: SumTotalInOere}"></span>
-    </div>
-    <span data-bind="formatMoney: {oere: SumTotalInOere}"></span>
-@Html.ActionLink("Confirm", "Checkout", "Cart", new {@class="btn btn-default btn-success"})
-</div>
-<div data-bind="if: Content().length == 0">Your cart is empty</div>
+<div ng-show="content">
+    <table class="table table-striped">
+        <tr>
+            <th>Title</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+        <tr ng-repeat="book in content">
+            <td>{{book.title}}</td>
+            <td>{{book.quantity}}</td>
+            <td>{{book.sumTotalInOere}}</td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td style="text-align: right">Total:</td>
+            <td>{{sumTotalInOere}}</td>
+        </tr>
+    </table>
 
+    @Html.ActionLink("Confirm", "Checkout", "Cart", new { @class = "btn btn-default btn-success" })
+</div>
+<div ng-hide="content">Your cart is empty</div>
 
 @section AdditionalScripts
 {
     <script type="text/javascript">
-        var data = @Html.Raw(new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(Model));
-
-        var viewModel = ko.mapping.fromJS(data);
-
-        ko.applyBindings(viewModel);
+        window.bookStoreData = @Html.Serialize(Model);
     </script>
 }
+

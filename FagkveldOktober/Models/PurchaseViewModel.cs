@@ -7,5 +7,7 @@ namespace FagkveldOktober.Models
         public BookViewModel SelectedBook { get; set; }
 
         public IList<BookViewModel> AlsoBought { get; set; }
+
+        public string CartUrl { get; set; }
     }
 }

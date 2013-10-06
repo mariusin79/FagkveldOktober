@@ -44,29 +44,30 @@ namespace Testing
 
         public void AddSomeBooksToTheRegistry()
         {
-            using (IDocumentStore db = new DocumentStore {Url = "http://localhost:8080", DefaultDatabase = "BooksRegistry"})
+            using (IDocumentStore db = new DocumentStore { Url = "http://localhost:8080", DefaultDatabase = "BooksRegistry" })
             {
                 db.Initialize();
 
                 IDocumentSession session = db.OpenSession();
 
-                AddBook(session, "George Orwell", "Paperback", 1, "1984", new DateTime(2010, 11, 28));
-                AddBook(session, "J. R. R. Tolkien", "Paperback", 2, "The Hobbit: Illustrated Edition", new DateTime(2009, 04, 20));
-                AddBook(session, "Joel Friel", "Kindle Edition", 3, "The Cyclist's Training Bible", new DateTime(2012, 11, 27));
+                AddBook(session, "George Orwell", "Paperback", "1984.jpg", 1, "1984", new DateTime(2010, 11, 28));
+                AddBook(session, "J. R. R. Tolkien", "Paperback", "thehobbit.jpg", 2, "The Hobbit: Illustrated Edition", new DateTime(2009, 04, 20));
+                AddBook(session, "Joel Friel", "Kindle Edition", "cyclists-training-bible.jpg", 3, "The Cyclist's Training Bible", new DateTime(2012, 11, 27));
 
                 session.SaveChanges();
             }
         }
 
-        private static void AddBook(IDocumentSession session, string author, string category, int id, string title, DateTime published)
+        private static void AddBook(IDocumentSession session, string author, string category, string coverFilename, int id, string title, DateTime published)
         {
             var book = new RmBook
                 {
                     Author = author,
                     Category = category,
-                    Key = new BookKey {Value = id},
+                    Key = new BookKey { Value = id },
                     Title = title,
-                    Published = published
+                    Published = published,
+                    CoverFilename = coverFilename
                 };
 
             session.Store(book);
