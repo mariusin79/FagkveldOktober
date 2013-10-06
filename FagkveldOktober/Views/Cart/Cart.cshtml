@@ -14,12 +14,12 @@
         <tr ng-repeat="book in content">
             <td>{{book.title}}</td>
             <td>{{book.quantity}}</td>
-            <td>{{book.sumTotalInOere}}</td>
+            <td>{{book.sumTotalInOere/100 | currency:"kr "}}</td>
         </tr>
         <tr>
             <td>&nbsp;</td>
             <td style="text-align: right">Total:</td>
-            <td>{{sumTotalInOere}}</td>
+            <td>{{sumTotalInOere/100 | currency:"kr "}}</td>
         </tr>
     </table>
 
