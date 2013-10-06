@@ -18,5 +18,7 @@ namespace FagkveldOktober.Models
         public DateTime Published { get; set; }
         
         public string Url { get; set; }
+
+        public string CoverFilename { get; set; }
     }
 }

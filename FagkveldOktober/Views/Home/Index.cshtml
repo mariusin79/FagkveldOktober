@@ -1,46 +1,29 @@
-﻿@model FagkveldOktober.Models.HomeIndexViewModel
+﻿@using FagkveldOktober
+@model FagkveldOktober.Models.HomeIndexViewModel
 <div class="page-header">
     <h2>Available for sale</h2>
 </div>
-<div data-bind="foreach: groupedBooks">
-    <div class="row" data-bind="foreach: $data">
-        <div class="col-lg-4">
-            <div class="panel media panel-default">
-                <a class="panel-body" data-bind="attr: {href: Url}">
-                    <span class="pull-left">
-                        <img height="100" width="80" />
-                    </span>
-                    <div class="media-body">
-                        <p data-bind="text: Title"></p>
-                        <p data-bind="text: Author"></p>
-                        <p data-bind="formatMoney: {oere: PriceInOere}"></p>
-                    </div>
-                </a>
-            </div>
+<div class="row">
+    <div class="col-lg-4" ng-repeat="book in booksAvailableForSale">
+        <div class="panel media panel-default">
+            <a class="panel-body" href="{{book.url}}">
+                <span class="pull-left">
+                    <img height="150" width="100" src="/Content/images/{{book.coverFilename}}" />
+                </span>
+                <div class="media-body">
+                    <p>{{book.title}}</p>
+                    <p>{{book.author}}</p>
+                    <p>{{book.priceInOere}}</p>
+                </div>
+            </a>
         </div>
     </div>
+
 
 </div>
 @section AdditionalScripts
 {
-    <script type="text/javascript">
-        var data = @Html.Raw(new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(Model));
-        
-        var viewModel = ko.mapping.fromJS(data);
-        viewModel.groupedBooks = ko.computed(function () {
-            var rows = [], current = [];
-            rows.push(current);
-            for (var i = 0; i < this.BooksAvailableForSale().length; i += 1) {
-                current.push(this.BooksAvailableForSale()[i]);
-                if (((i + 1) % 3) === 0) {
-                    current = [];
-                    rows.push(current);
-                }
-            }
-            return rows;
-        }, viewModel);
-
-
-        ko.applyBindings(viewModel);
+    <script>
+        window.bookStoreData = @Html.Serialize(Model);
     </script>
 }

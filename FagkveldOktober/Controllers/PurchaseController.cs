@@ -15,7 +15,7 @@ namespace FagkveldOktober.Controllers
     {
         private readonly IServiceGateway<IBooksRegistryService> _bookDetailsProvider;
         private readonly IServiceGateway<ISalesService> _priceProvider;
-        private readonly IServiceGateway<IMarketingService> _marketingInfoProvider; 
+        private readonly IServiceGateway<IMarketingService> _marketingInfoProvider;
 
         public PurchaseController(IServiceGateway<IBooksRegistryService> bookDetailsProvider, IServiceGateway<ISalesService> priceProvider, IServiceGateway<IMarketingService> marketingInfoProvider)
         {
@@ -26,7 +26,7 @@ namespace FagkveldOktober.Controllers
 
         public ActionResult View(int bookId)
         {
-            var selectedBookKey = new BookKey {Value = bookId};
+            var selectedBookKey = new BookKey { Value = bookId };
 
             var alsoBought = _marketingInfoProvider.Execute(service => service.FindBooksWhoPeopleAlsoBoughtWhenTheyBought(selectedBookKey)).Select(b => b.Id).ToList();
 
@@ -49,29 +49,30 @@ namespace FagkveldOktober.Controllers
                             Published = selectedBookDetails.Published,
                             Title = selectedBookDetails.Title
                         },
-                        AlsoBought = bookDetails.Where(book => book.Id != selectedBookKey).Select(details => new BookViewModel
-                            {
-                                Author = details.Author,
-                                Category = details.Category,
-                                Id = details.Id, 
-                                PriceInOere = prices.First(price => price.Id == details.Id).Price.PriceInOere, 
-                                Published = details.Published,
-                                Title = details.Title,
-                                Url = Url.Action("View", "Purchase", new {bookId= details.Id.Value})
-                            }).ToList()
+                    AlsoBought = bookDetails.Where(book => book.Id != selectedBookKey).Select(details => new BookViewModel
+                        {
+                            Author = details.Author,
+                            Category = details.Category,
+                            Id = details.Id,
+                            PriceInOere = prices.First(price => price.Id == details.Id).Price.PriceInOere,
+                            Published = details.Published,
+                            Title = details.Title,
+                            Url = Url.Action("View", "Purchase", new { bookId = details.Id.Value })
+                        }).ToList(),
+                    CartUrl = Url.Action("AddToCart")
                 };
 
             return View(vm);
-         }
+        }
 
         public ActionResult AddToCart(int bookId)
         {
             var cart = Session.Cart();
 
-            cart.AddToCart(new BookKey {Value = bookId});
+            cart.AddToCart(new BookKey { Value = bookId });
             Session.Cart(cart);
 
-            return Json(new {Status = "done"}, JsonRequestBehavior.AllowGet);
+            return Json(new { Status = "done" }, JsonRequestBehavior.AllowGet);
         }
     }
 }

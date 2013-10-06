@@ -38,7 +38,8 @@ namespace FagkveldOktober.Controllers
                 bookViewModel.Title = detail.Title;
                 bookViewModel.Author = detail.Author;
                 bookViewModel.Category = detail.Category;
-                bookViewModel.Published = detail.Published;            
+                bookViewModel.Published = detail.Published;
+                bookViewModel.CoverFilename = detail.CoverFilename;
             }
 
             var vm = new HomeIndexViewModel

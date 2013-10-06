@@ -1,38 +1,33 @@
 ﻿<!DOCTYPE html>
-<html>
+<html ng-app>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
 
-    @Styles.Render("~/Content/bootstrap/bootstrap.css")
-    @Styles.Render("~/Content/Site.css")
-    @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/Scripts/knockout-2.3.0.js")
-    @Scripts.Render("~/Scripts/knockout.mapping-latest.js")
-    @Scripts.Render("~/Content/js/formatHelper.js")
-    @Scripts.Render("~/Content/js/knockout-extensions.js")
-    @Scripts.Render("~/Scripts/jquery-1.9.1.js")
-    @Scripts.Render("~/Scripts/bootstrap.js")
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/Content/scripts")
 
 </head>
-    <body>
-        <div class="navbar navbar-default navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="/">Book Store</a>
-                </div>
-                <div class="navbar-collapse collapse">
-                    <div class="navbar-right">
-                        @{ Html.RenderAction("Widget", "Cart"); }
-                    </div>
-                </div>
+<body ng-controller="BookCtrl">
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">Book Store</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>@{ Html.RenderAction("Widget", "Cart"); }</li>
+                </ul>
             </div>
         </div>
-        <div class="container">
-                @RenderBody()
-        </div>
+    </div>
 
-        @RenderSection("AdditionalScripts", false)
-    </body>
+    <div class="container">
+        @RenderBody()
+    </div>
+
+
+    @RenderSection("AdditionalScripts", false)
+</body>
 </html>
