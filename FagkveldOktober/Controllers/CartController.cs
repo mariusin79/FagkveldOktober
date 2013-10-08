@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.Services.Protocols;
 using BooksRegistry.Contracts;
 using FagkveldOktober.Cart;
 using FagkveldOktober.Models;
 using FagkveldOktober.ServiceGateways;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using NServiceBus;
 using Sales.Contracts;
 using Sales.Contracts.Commands;
@@ -25,40 +28,44 @@ namespace FagkveldOktober.Controllers
             _booksRegistryService = booksRegistryService;
         }
 
-        public ActionResult Widget()
+        public ActionResult Index()
         {
-            return PartialView();
-        }
-
-        public ViewResult Cart()
-        {
-            var vm = new CartViewModel {Content = new List<CartItemViewModel>()};
-
             var cart = Session.Cart();
 
             BookKey[] booksInCart = cart.Items.Values.Select(item => item.Book).ToArray();
             var booksInCartDetails = _booksRegistryService.Execute(service => service.GetDetailsAboutBooks(booksInCart));
             var bookPrices = _salesService.Execute(service => service.GetBooksAvailableForSale(booksInCart));
 
-            foreach (var details in booksInCartDetails)
+            var vm = booksInCartDetails.Select(details => new CartItemViewModel
             {
-                vm.Content.Add(new CartItemViewModel
-                    {
-                        Title = details.Title,
-                        Author = details.Author, 
-                        Category = details.Category, 
-                        Id = details.Id, 
-                        Published = details.Published, 
-                        Quantity = cart.Items[details.Id.Value].Quantity, 
-                        SumTotalInOere = bookPrices.First(price => price.Id == details.Id).Price.PriceInOere * cart.Items[details.Id.Value].Quantity
-                    });
-            }
+                Title = details.Title,
+                Author = details.Author,
+                Category = details.Category,
+                Id = details.Id,
+                Published = details.Published,
+                Quantity = cart.Items[details.Id.Value].Quantity,
+                SumTotalInOere =
+                    bookPrices.First(price => price.Id == details.Id).Price.PriceInOere*
+                    cart.Items[details.Id.Value].Quantity
+            }).ToList();
 
-            vm.SumTotalInOere = vm.Content.Sum(item => item.SumTotalInOere);
+            var json = JsonConvert.SerializeObject(vm,
+                new JsonSerializerSettings {ContractResolver = new CamelCasePropertyNamesContractResolver()});
+            return Content(json, "application/json");
+        }
+        
+        [HttpPut, ActionName("Index")]
+        public ActionResult AddToCart(int bookId)
+        {
+            var cart = Session.Cart();
 
-            return View(vm);
+            cart.AddToCart(new BookKey { Value = bookId });
+            Session.Cart(cart);
+
+            return Json(new { Status = "done" }, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost, ActionName("Index")]
         public ActionResult Checkout()
         {
             var cart = Session.Cart();
@@ -71,7 +78,7 @@ namespace FagkveldOktober.Controllers
 
             Session.Cart(new ShoppingCart());
 
-            return RedirectToAction("Index", "Home");
+            return Json(new {Status = "ok"}, JsonRequestBehavior.AllowGet);
         }
     }
 }

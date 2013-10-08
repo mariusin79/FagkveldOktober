@@ -1,10 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using BooksRegistry.Contracts;
 using FagkveldOktober.Models;
 using FagkveldOktober.ServiceGateways;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Sales.Contracts;
+using SharedContracts;
 
 namespace FagkveldOktober.Controllers
 {
@@ -21,17 +25,41 @@ namespace FagkveldOktober.Controllers
 
         public ViewResult Index()
         {
-            List<AvailableBook> availableBooks = _salesService.Execute(service => service.FindBooksAvailableForSale());
-            List<Book> details = _booksRegistryService.Execute(service => service.GetDetailsAboutBooks(availableBooks.Select(book => book.Id).ToArray()));
+            return View();
+        }
+
+        private ContentResult GetBook(int bookId)
+        {
+            var bookKey = new BookKey { Value = bookId };
+            var bookInfo = _salesService.Execute(service => service.GetBooksAvailableForSale(new[] { bookKey })).First();
+            var detail = _booksRegistryService.Execute(service => service.GetDetailsAboutBooks(new[] { bookKey })).First();
+
+            var vm = new BookViewModel
+            {
+                Id = bookInfo.Id,
+                PriceInOere = bookInfo.Price.PriceInOere,
+                Title = detail.Title,
+                Author = detail.Author,
+                Category = detail.Category,
+                Published = detail.Published,
+                CoverFilename = detail.CoverFilename
+            };
+            var json = JsonConvert.SerializeObject(vm, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+            return Content(json, "application/json");
+        }
+
+        private ContentResult GetBooks()
+        {
+            var availableBooks = _salesService.Execute(service => service.FindBooksAvailableForSale());
+            var bookDetails = _booksRegistryService.Execute(service => service.GetDetailsAboutBooks(availableBooks.Select(book => book.Id).ToArray()));
 
             List<BookViewModel> booksAvailableForSale = availableBooks.Select(book => new BookViewModel
-                {
-                    Id = book.Id,
-                    PriceInOere = book.Price.PriceInOere,
-                    Url = Url.Action("View", "Purchase", new {bookId = book.Id.Value})
-                }).ToList();
+            {
+                Id = book.Id,
+                PriceInOere = book.Price.PriceInOere
+            }).ToList();
 
-            foreach (var detail in details)
+            foreach (var detail in bookDetails)
             {
                 BookViewModel bookViewModel = booksAvailableForSale.First(book => book.Id == detail.Id);
 
@@ -41,13 +69,14 @@ namespace FagkveldOktober.Controllers
                 bookViewModel.Published = detail.Published;
                 bookViewModel.CoverFilename = detail.CoverFilename;
             }
+            
+            var json = JsonConvert.SerializeObject(booksAvailableForSale, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+            return Content(json, "application/json");
+        }
 
-            var vm = new HomeIndexViewModel
-                {
-                    BooksAvailableForSale = booksAvailableForSale
-                };
-
-            return View(vm);
+        public ActionResult Books(int? bookId)
+        {
+            return bookId.HasValue ? GetBook(bookId.Value) : GetBooks();
         }
     }
 }
