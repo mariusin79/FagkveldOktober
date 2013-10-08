@@ -9,7 +9,8 @@ namespace FagkveldOktober
         {
             bundles.Add(new ScriptBundle("~/Content/scripts").Include(
                 "~/Scripts/lib/jquery-{version}.js",
-                "~/Scripst/lib/bootstrap.js",
+                "~/Scripts/lib/bootstrap.js",
+                "~/Scripts/lib/underscore.js",
                 "~/Scripts/lib/angular.js",
                 "~/Scripts/lib/angular-resource.js",
                 "~/Scripts/lib/angular-route.js",

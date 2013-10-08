@@ -62,7 +62,7 @@ namespace FagkveldOktober.Controllers
             cart.AddToCart(new BookKey { Value = bookId });
             Session.Cart(cart);
 
-            return Json(new { Status = "done" }, JsonRequestBehavior.AllowGet);
+            return Index();
         }
 
         [HttpPost, ActionName("Index")]

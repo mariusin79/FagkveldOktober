@@ -12,8 +12,7 @@
                 controller: 'PurchaseCtrl',
             })
             .when('/Cart', {
-                templateUrl: '/Scripts/Views/cart.html',
-                controller: 'CartCtrl'
+                templateUrl: '/Scripts/Views/cart.html'
             }).otherwise({ redirectTo: '/' });
 
     }]);
@@ -34,41 +33,48 @@
     bookstore.factory('Cart', ['$resource', function ($resource) {
         var cart = $resource('/Cart/Index', null, {
             'getContents': { method: 'GET', isArray: true },
-            'addToCart': { method: 'PUT' },
+            'addToCart': { method: 'PUT', isArray: true },
             'checkout': { method: 'POST' }
         });
         return cart;
     }]);
 
-    bookstore.controller('BookCtrl', ['$scope', 'Book', 'Cart', function ($scope, Book, Cart) {
-        $scope.books = Book.getAll();
-    }]);
+    bookstore.controller('StoreCtrl', ['$scope', 'Cart', '$location', function ($scope, Cart, $location) {
+        $scope.cart = Cart.getContents();
+        $scope.getCartItemCount = function () {
+            return _.reduce($scope.cart, function (memo, item) {
+                return memo + item.quantity;
+            }, 0);
+        };
 
-    bookstore.controller('PurchaseCtrl', ['$scope', '$routeParams', 'AlsoPurchased', 'Book', 'Cart', function ($scope, $routeParams, AlsoPurchased, Book, Cart) {
-        $scope.selectedBook = Book.get({ bookId: $routeParams.bookId });
-        $scope.alsoPurchased = AlsoPurchased.get({ bookId: $routeParams.bookId });
-        $scope.purchaseBook = function (bookId) {
-            Cart.addToCart({ bookId: bookId }, function () {
-                alert('book added to acart');
+        $scope.addToCart = function (bookId) {
+            Cart.addToCart({ bookId: bookId }, function (contents){
+                $scope.cart = contents;
+            });
+        };
+        $scope.getSubTotalInOere = function () {
+            return _.reduce($scope.cart, function (memo, item) {
+                return memo + item.sumTotalInOere;
+            }, 0);
+        };
+        
+        $scope.checkout = function () {
+            Cart.checkout(function () {
+                $scope.cart = [];
+                $location.path('#/');
             });
         };
     }]);
-
-    bookstore.controller('CartCtrl', ['$scope', '$location', 'Cart', function ($scope, $location, Cart) {
-        $scope.cart = Cart.getContents();
-        $scope.getSubTotalInOere = function () {
-            var i,sum = 0;
-            for (i = 0, l = $scope.cart.length; i < l ;i++)
-            {
-                sum += $scope.cart[i].sumTotalInOere;
-            }
-            return sum;
-        };
-        $scope.checkout = function () {
-            Cart.checkout(function () { $location.path('#/'); });
-        };
+    
+    bookstore.controller('BookCtrl', ['$scope', 'Book', function ($scope, Book) {
+        $scope.books = Book.getAll();
     }]);
 
+    bookstore.controller('PurchaseCtrl', ['$scope', '$routeParams', 'AlsoPurchased', 'Book', function ($scope, $routeParams, AlsoPurchased, Book) {
+        $scope.selectedBook = Book.get({ bookId: $routeParams.bookId });
+        $scope.alsoPurchased = AlsoPurchased.get({ bookId: $routeParams.bookId });
+    }]);
+    
     bookstore.directive('book', function () {
         return {
             restrict: 'E',
