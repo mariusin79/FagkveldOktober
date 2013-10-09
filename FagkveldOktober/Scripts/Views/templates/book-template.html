@@ -1,0 +1,14 @@
+﻿<div class="panel media panel-default book">
+    <div class="panel-body">
+        <a href="#/Book/{{book.id.value}}">
+            <span class="pull-left">
+                <img class="cover" height="150" width="100" ng-src="/Content/images/{{book.coverFilename}}" />
+            </span>
+            <div class="media-body">
+                <p class="author">{{book.author}}</p>
+                <p>{{book.title}}</p>
+                <p>{{book.priceInOere/100 | currency:"kr "}}</p>
+            </div>
+        </a>
+    </div>
+</div>

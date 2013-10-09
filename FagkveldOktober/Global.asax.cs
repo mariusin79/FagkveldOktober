@@ -1,7 +1,9 @@
 ﻿using System.Web.Http;
+using System.Web.Http.Dispatcher;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Castle.Components.DictionaryAdapter.Xml;
 using Castle.Windsor;
 using Castle.Windsor.Installer;
 using FagkveldOktober.IoC;
@@ -23,8 +25,9 @@ namespace FagkveldOktober
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            var container = new WindsorContainer();
-            container.Install(FromAssembly.This());
+            var container = new WindsorContainer().Install(FromAssembly.This());  
+            
+            GlobalConfiguration.Configuration.Services.Replace(typeof(IHttpControllerActivator),new WindsorCompositionRoot(container));
             ControllerBuilder.Current.SetControllerFactory(new WindsorControllerFactory(container));
 
             Configure.Serialization.Xml();

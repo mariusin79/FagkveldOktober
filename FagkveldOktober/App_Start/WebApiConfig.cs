@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
+﻿using System.Web.Http;
+using System.Web.Routing;
+using FagkveldOktober.Cart;
+using Newtonsoft.Json.Serialization;
 
 namespace FagkveldOktober
 {
@@ -9,11 +9,13 @@ namespace FagkveldOktober
     {
         public static void Register(HttpConfiguration config)
         {
-            config.Routes.MapHttpRoute(
+            RouteTable.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
-            );
+            ).RouteHandler = new SessionRouteHandler();
+
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         }
     }
 }

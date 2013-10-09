@@ -1,0 +1,26 @@
+﻿<div class="page-header">
+    <h2>Cart</h2>
+</div>
+
+<div ng-show="cart.length">
+    <table class="table table-striped">
+        <tr>
+            <th>Title</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+        <tr ng-repeat="book in cart">
+            <td>{{book.title}}</td>
+            <td>{{book.quantity}}</td>
+            <td>{{book.sumTotalInOere/100 | currency:"kr "}}</td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td style="text-align: right">Total:</td>
+            <td>{{getSubTotalInOere()/100 | currency:"kr "}}</td>
+        </tr>
+    </table>
+    
+    <a class="btn btn-default btn-success" ng-click="checkout()">Checkout</a>
+</div>
+<div ng-hide="cart.length">Your cart is empty</div>

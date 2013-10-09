@@ -1,15 +1,15 @@
-﻿using System.Web;
+﻿using System.Web.SessionState;
 
 namespace FagkveldOktober.Cart
 {
     public static class CartSessionExtensions
     {
-        public static ShoppingCart Cart(this HttpSessionStateBase session)
+        public static ShoppingCart Cart(this HttpSessionState session)
         {
             return (ShoppingCart)session["Cart"] ?? new ShoppingCart();            
         }
 
-        public static void Cart(this HttpSessionStateBase session, ShoppingCart cart)
+        public static void Cart(this HttpSessionState session, ShoppingCart cart)
         {
             session["Cart"] = cart;
         }
