@@ -17,20 +17,20 @@
     }]);
 
     bookstore.factory('Book', ['$resource', function ($resource) {
-        var book = $resource('/Home/Books', null, {
+        var book = $resource('/api/book', null, {
             'getAll': { method: 'GET', isArray: true }
         });
         return book;
     }]);
 
     bookstore.factory('AlsoPurchased', ['$resource', function ($resource) {
-        return $resource('/Purchase/Index', null, {           
+        return $resource('/api/alsoPurchased', null, {           
            'get': {method: 'GET', isArray: true } 
         });
     }]);
 
     bookstore.factory('Cart', ['$resource', function ($resource) {
-        var cart = $resource('/Cart/Index', null, {
+        var cart = $resource('/api/cart', null, {
             'getContents': { method: 'GET', isArray: true },
             'addToCart': { method: 'PUT', isArray: true },
             'checkout': { method: 'POST' }

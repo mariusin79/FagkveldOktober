@@ -1,13 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web.Mvc;
-using System.Web.Services.Protocols;
+using System.Web;
+using System.Web.Http;
 using BooksRegistry.Contracts;
 using FagkveldOktober.Cart;
 using FagkveldOktober.Models;
 using FagkveldOktober.ServiceGateways;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using NServiceBus;
 using Sales.Contracts;
 using Sales.Contracts.Commands;
@@ -15,9 +13,9 @@ using SharedContracts;
 
 namespace FagkveldOktober.Controllers
 {
-    public class CartController : Controller
+    public class CartController : ApiController
     {
-        private IBus _bus;
+        private readonly IBus _bus;
         private readonly IServiceGateway<ISalesService> _salesService;
         private readonly IServiceGateway<IBooksRegistryService> _booksRegistryService;
 
@@ -28,9 +26,10 @@ namespace FagkveldOktober.Controllers
             _booksRegistryService = booksRegistryService;
         }
 
-        public ActionResult Index()
+        // GET api/cart
+        public IEnumerable<CartItemViewModel> Get()
         {
-            var cart = Session.Cart();
+            var cart = HttpContext.Current.Session.Cart();
 
             BookKey[] booksInCart = cart.Items.Values.Select(item => item.Book).ToArray();
             var booksInCartDetails = _booksRegistryService.Execute(service => service.GetDetailsAboutBooks(booksInCart));
@@ -45,40 +44,33 @@ namespace FagkveldOktober.Controllers
                 Published = details.Published,
                 Quantity = cart.Items[details.Id.Value].Quantity,
                 SumTotalInOere =
-                    bookPrices.First(price => price.Id == details.Id).Price.PriceInOere*
+                    bookPrices.First(price => price.Id == details.Id).Price.PriceInOere *
                     cart.Items[details.Id.Value].Quantity
             }).ToList();
-
-            var json = JsonConvert.SerializeObject(vm,
-                new JsonSerializerSettings {ContractResolver = new CamelCasePropertyNamesContractResolver()});
-            return Content(json, "application/json");
-        }
-        
-        [HttpPut, ActionName("Index")]
-        public ActionResult AddToCart(int bookId)
-        {
-            var cart = Session.Cart();
-
-            cart.AddToCart(new BookKey { Value = bookId });
-            Session.Cart(cart);
-
-            return Index();
+            return vm;
         }
 
-        [HttpPost, ActionName("Index")]
-        public ActionResult Checkout()
+
+        public void Post()
         {
-            var cart = Session.Cart();
+            var cart = HttpContext.Current.Session.Cart();
 
             _bus.Send<IPlaceAnOrder>(cmd =>
-                {
-                    cmd.Buyer = new CustomerKey {Value = 1};
-                    cmd.BooksIAmBuying = cart.Items.Select(item => item.Value.Book).ToArray();
-                });
+            {
+                cmd.Buyer = new CustomerKey { Value = 1 };
+                cmd.BooksIAmBuying = cart.Items.Select(item => item.Value.Book).ToArray();
+            });
 
-            Session.Cart(new ShoppingCart());
+            HttpContext.Current.Session.Cart(new ShoppingCart());
+        }
 
-            return Json(new {Status = "ok"}, JsonRequestBehavior.AllowGet);
+        public IEnumerable<CartItemViewModel> Put([FromBody]dynamic body)
+        {
+            var cart = HttpContext.Current.Session.Cart();
+
+            cart.AddToCart(new BookKey { Value = body.bookId });
+            HttpContext.Current.Session.Cart(cart);
+            return Get();
         }
     }
 }
