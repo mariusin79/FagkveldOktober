@@ -1,29 +1,33 @@
-﻿@using FagkveldOktober
-@model FagkveldOktober.Models.HomeIndexViewModel
-<div class="page-header">
-    <h2>Available for sale</h2>
-</div>
-<div class="row">
-    <div class="col-lg-4" ng-repeat="book in booksAvailableForSale">
-        <div class="panel media panel-default">
-            <a class="panel-body" href="{{book.url}}">
-                <span class="pull-left">
-                    <img height="150" width="100" ng-src="/Content/images/{{book.coverFilename}}" />
-                </span>
-                <div class="media-body">
-                    <p>{{book.title}}</p>
-                    <p>{{book.author}}</p>
-                    <p>{{book.priceInOere}}</p>
-                </div>
-            </a>
+﻿<!DOCTYPE html>
+<html ng-app="BookstoreApp">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Book Store</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/Content/scripts")
+</head>
+<body ng-controller="StoreCtrl">
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">Book Store</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a ng-show="getCartItemCount()" href="#/Cart">
+                            <span class="glyphicon glyphicon-shopping-cart"></span>
+                            Checkout ({{getCartItemCount()}} items)
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 
-
-</div>
-@section AdditionalScripts
-{
-    <script>
-        window.bookStoreData = @Html.Serialize(Model);
-    </script>
-}
+    <div class="container">
+        <div ng-view></div>
+    </div>   
+</body>
+</html>

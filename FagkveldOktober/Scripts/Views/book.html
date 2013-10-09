@@ -1,0 +1,16 @@
+﻿<div class="page-header">
+    <h2>Book Info</h2>
+</div>
+<div ng-show="selectedBook.title">
+    <h3>{{selectedBook.title}}</h3>
+    <p>Some additional info on the book here</p>
+    <input class="btn btn-default btn-primary" type="button" value="Add To Cart" ng-click="addToCart(selectedBook.id.value)" />
+</div>
+<div ng-show="alsoPurchased.length">
+    <h2>Customers Who Bought This Book Also Bought</h2>
+    <div class="row">
+        <div class="col-lg-3" ng-repeat="book in alsoPurchased">
+            <book />
+        </div>
+    </div>
+</div>
