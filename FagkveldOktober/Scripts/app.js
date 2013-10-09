@@ -4,8 +4,7 @@
     bookstore.config(['$routeProvider', function ($routeProvider) {
         $routeProvider
             .when('/', {
-                templateUrl: '/Scripts/Views/books.html',
-                controller: 'BookCtrl',
+                templateUrl: '/Scripts/Views/books.html'
             })
             .when('/Book/:bookId', {
                 templateUrl: '/Scripts/Views/book.html',
@@ -39,7 +38,8 @@
         return cart;
     }]);
 
-    bookstore.controller('StoreCtrl', ['$scope', 'Cart', '$location', function ($scope, Cart, $location) {
+    bookstore.controller('StoreCtrl', ['$scope', 'Cart', 'Book', '$location', function ($scope, Cart, Book, $location) {
+        $scope.books = Book.getAll();
         $scope.cart = Cart.getContents();
         $scope.getCartItemCount = function () {
             return _.reduce($scope.cart, function (memo, item) {
@@ -52,6 +52,7 @@
                 $scope.cart = contents;
             });
         };
+        
         $scope.getSubTotalInOere = function () {
             return _.reduce($scope.cart, function (memo, item) {
                 return memo + item.sumTotalInOere;
@@ -65,13 +66,14 @@
             });
         };
     }]);
-    
-    bookstore.controller('BookCtrl', ['$scope', 'Book', function ($scope, Book) {
-        $scope.books = Book.getAll();
-    }]);
 
-    bookstore.controller('PurchaseCtrl', ['$scope', '$routeParams', 'AlsoPurchased', 'Book', function ($scope, $routeParams, AlsoPurchased, Book) {
-        $scope.selectedBook = Book.get({ bookId: $routeParams.bookId });
+    bookstore.controller('PurchaseCtrl', ['$scope', '$routeParams', 'AlsoPurchased', function ($scope, $routeParams, AlsoPurchased) {
+        $scope.books.$promise.then(function (books) {
+            $scope.selectedBook = _.find(books, function (book) {
+                return book.id.value == $routeParams.bookId;
+            });
+        });
+        
         $scope.alsoPurchased = AlsoPurchased.get({ bookId: $routeParams.bookId });
     }]);
     
